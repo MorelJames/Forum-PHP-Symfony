@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminCommentController extends AbstractController{
     
-    #[Route('/commentAdmin', methods: ['GET'])]
-    public function base() : Response{
+    #[Route('/commentAdmin/{name}', methods: ['GET'])]
+    public function base($name){
 
-        return new Response('admin com');
+        return $this->render('/AdminComment.html.twig',[
+            'name'=>$name,
+        ]);
     }
 }

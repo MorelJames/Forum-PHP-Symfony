@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminPostController extends AbstractController{
     
-    #[Route('/postAdmin', methods: ['GET'])]
-    public function base() : Response{
+    #[Route('/postAdmin/{name}', methods: ['GET'])]
+    public function base($name) {
 
-        return new Response('admin post');
+        return $this->render('/AdminPost.html.twig',[
+            'name'=> $name
+        ]);
     }
 }

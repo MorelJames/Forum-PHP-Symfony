@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminCategoryController extends AbstractController{
 
-    #[Route('/categoryAdmin', methods: ['GET'])]
-    public function base() : Response{
+    #[Route('/categoryAdmin/{category}', methods: ['GET'])]
+    public function base($category){
 
-        return new Response('admin categ');
+        return $this->render('/AdminCategory.html.twig',[
+            'category'=> $category,
+        ]);
     }
 }

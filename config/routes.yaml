@@ -5,3 +5,11 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+adminComment:
+    path: /commentAdmin/{name}
+    controller: 'App\Controller\admin\AdminCommentController::base'
+
+adminCategory:
+    path: /categoryAdmin/{category}
+    controller: 'App\Controller\admin\AdminCommentController::base'

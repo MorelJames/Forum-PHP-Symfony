@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserPostController extends AbstractController{
     
-    #[Route('/postUser', methods: ['GET'])]
-    public function base() : Response{
+    #[Route('/postUser/{name}', methods: ['GET'])]
+    public function base($name) {
 
-        return new Response('user post');
+        return $this->render('/UserPost.html.twig',[
+            'name'=> $name
+        ]);
     }
 }

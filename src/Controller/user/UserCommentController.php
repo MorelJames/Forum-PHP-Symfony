@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserCommentController extends AbstractController{
     
-    #[Route('/commentUser', methods: ['GET'])]
-    public function base() : Response{
+    #[Route('/commentUser/{name}', methods: ['GET'])]
+    public function base($name){
 
-        return new Response('user com');
+        return $this->render('/UserComment.html.twig',[
+            'name'=>$name,
+        ]);
     }
 }
