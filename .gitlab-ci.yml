@@ -1,0 +1,43 @@
+# This file is a template, and might need editing before it works on your project.
+# You can copy and paste this template into a new `.gitlab-ci.yml` file.
+# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
+#
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/PHP.gitlab-ci.yml
+
+# Select image from https://hub.docker.com/_/php/
+image: php:latest
+
+stages:
+  - setup
+  - test
+
+variables:
+  APP_ENV: test
+  APP_DEBUG: '1'
+
+cache:
+  paths:
+    - vendor/
+
+test:
+  stage: test
+  script:
+    - symfony server:start --no-tls --daemon
+    - sleep 3
+    - curl --fail http://127.0.0.1:8000/
+  after_script:
+    - symfony server:stop
+
+install_dependencies:
+  stage: setup
+  script:
+    - apt-get update && apt-get install -y unzip git
+    - curl -sS https://get.symfony.com/cli/installer | bash
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - export PATH="$HOME/.symfony/bin:$PATH"
+    - export PATH="/usr/local/bin:$PATH"
+    - mv $HOME/.symfony/bin/symfony /usr/local/bin/
+    - symfony check:requirements
