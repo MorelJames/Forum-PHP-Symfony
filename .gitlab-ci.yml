@@ -38,4 +38,6 @@ install_dependencies:
     - curl -sS https://get.symfony.com/cli/installer | bash
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - export PATH="$HOME/.symfony/bin:$PATH"
+    - export PATH="/usr/local/bin:$PATH"
+    - mv $HOME/.symfony/bin/symfony /usr/local/bin/
     - symfony check:requirements
