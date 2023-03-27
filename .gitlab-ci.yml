@@ -22,12 +22,6 @@ cache:
   paths:
     - vendor/
 
-before_script:
-  - apt-get update && apt-get install -y unzip git
-  - curl -sS https://get.symfony.com/cli/installer | bash
-  - export PATH="$HOME/.symfony/bin:$PATH"
-  - symfony check:requirements
-
 test:
   stage: test
   script:
