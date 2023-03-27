@@ -11,6 +11,7 @@
 image: php:latest
 
 stages:
+  - setup
   - test
 
 variables:
