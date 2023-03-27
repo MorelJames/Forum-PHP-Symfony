@@ -37,4 +37,5 @@ install_dependencies:
   script:
     - apt-get update && apt-get install -y unzip git
     - curl -sS https://get.symfony.com/cli/installer | bash
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - export PATH="$HOME/.symfony/bin:$PATH"
