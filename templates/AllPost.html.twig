@@ -1,0 +1,12 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+   
+    {% for post in allPost %}
+        <div class= "post">
+            <h1>{{post.getTitle()}}</h1>
+            <p>{{post.getContent()}}</p>
+        </div>
+    {% endfor %} 
+
+{% endblock %}

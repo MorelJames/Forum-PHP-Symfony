@@ -21,23 +21,24 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    private ?DateTimeInterface $publishedAt = null;
+    private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?DateTimeInterface $updatedAt = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'Posts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     public function __construct()
@@ -87,24 +88,24 @@ class Post
         return $this;
     }
 
-    public function getPublishedAt(): ?string
+    public function getPublishedAt(): ?\DateTimeImmutable
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(string $publishedAt): self
+    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(string $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -179,5 +180,4 @@ class Post
 
         return $this;
     }
-
 }
