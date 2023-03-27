@@ -25,7 +25,6 @@ cache:
 test:
   stage: test
   script:
-    - composer install --no-interaction --prefer-dist
     - symfony server:start --no-tls --daemon
     - sleep 3
     - curl --fail http://127.0.0.1:8000/
