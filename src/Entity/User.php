@@ -3,151 +3,113 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $username = null;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $hashpass = null;
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
-    private Collection $comments;
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class, orphanRemoval: true)]
-    private Collection $Posts;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilePic = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-        $this->Posts = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getEmail(): ?string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(?string $username): self
+    public function setEmail(string $email): self
     {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getHashpass(): ?string
-    {
-        return $this->hashpass;
-    }
-
-    public function setHashpass(string $hashpass): self
-    {
-        $this->hashpass = $hashpass;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Comment>
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
      */
-    public function getComments(): Collection
+    public function getUserIdentifier(): string
     {
-        return $this->comments;
+        return (string) $this->email;
     }
 
-    public function addComment(Comment $comment): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setUser($this);
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        return $this;
+        return array_unique($roles);
     }
 
-    public function removeComment(Comment $comment): self
+    public function setRoles(array $roles): self
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
-        }
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Post>
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getPosts(): Collection
+    public function getPassword(): string
     {
-        return $this->Posts;
+        return $this->password;
     }
 
-    public function addPost(Post $post): self
+    public function setPassword(string $password): self
     {
-        if (!$this->Posts->contains($post)) {
-            $this->Posts->add($post);
-            $post->setUser($this);
-        }
+        $this->password = $password;
 
         return $this;
     }
 
-    public function removePost(Post $post): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        if ($this->Posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getUser() === $this) {
-                $post->setUser(null);
-            }
-        }
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function getProfilePic(): ?string
+    public function isVerified(): bool
     {
-        return $this->profilePic;
+        return $this->isVerified;
     }
 
-    public function setProfilePic(?string $profilePic): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->profilePic = $profilePic;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

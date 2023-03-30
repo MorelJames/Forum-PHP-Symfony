@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class AdminPostController extends AbstractController
 {
 
-    #[Route('/postAdmin')]
+    #[Route('/postAdmin', name: 'app_postAdmin')]
     public function base(ManagerRegistry $doctrine, Request $request)
     {
 
