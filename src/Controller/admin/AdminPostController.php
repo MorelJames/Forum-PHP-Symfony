@@ -19,6 +19,7 @@ class AdminPostController extends AbstractController
     {
 
         $post = new Post();
+        
 
         $form = $this->createForm(PostType::class, $post);
 
