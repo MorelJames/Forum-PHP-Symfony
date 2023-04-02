@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\admin;
+namespace App\Controller;
 
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,27 +13,16 @@ use App\Form\PostType;
 use Monolog\DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 
-class AdminPostController extends AbstractController
+class CreatePostController extends AbstractController
 {
-
-    #[Route('/postAdmin')]
-    public function base(ManagerRegistry $doctrine, Request $request)
+    #[Route('/createPost')]
+    public function createPost(ManagerRegistry $doctrine, Request $request) : Response
     {
-
         $post = new Post();
-        
 
         $form = $this->createForm(PostType::class, $post);
 
         $form->handleRequest($request);
-
-        $comment = new Comment();
-
-        $formComment = $this->createForm(CommentType::class, $comment);
-
-        if ($formComment->isSubmitted() && $formComment->isValid()) {
-            $comment = $formComment->getData();
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post = $form->getData();
@@ -47,8 +36,8 @@ class AdminPostController extends AbstractController
             $entity->persist($post);
             $entity->flush();
 
-            return $this->render('/Post.html.twig', [
-                'post' => $post,
+            return $this->redirectToRoute('post',[
+                'postId' => $post->getId(),
             ]);
         }
 
