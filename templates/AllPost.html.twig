@@ -4,7 +4,7 @@
    
     {% for post in allPost %}
         <div class= "post">
-            <h1>{{post.getTitle()}}</h1>
+            <a href="{{ path('post', {'postId': post.getId()}) }}">{{post.getTitle()}}</a>
             <p>{{post.getContent()}}</p>
         </div>
     {% endfor %} 

@@ -2,35 +2,26 @@
 # Depuis src/Form/PostType.php
 namespace App\Form;
 
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Post;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class PostType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
-            ->add('title', TextType::class)
-            ->add('categories', EntityType::class, array(
-                'class' => 'App\Entity\Category',
-                'multiple' => true,
-                'choice_label' => 'name',
-            ))
-            ->add('content', TextareaType::class)
-            ->add('save', SubmitType::class);
+            ->add('content', TextType::class)
+            ->add('Save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

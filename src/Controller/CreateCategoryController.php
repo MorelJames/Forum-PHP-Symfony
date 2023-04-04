@@ -13,7 +13,7 @@ class CreateCategoryController extends AbstractController
 {
 
     #[Route('/createCategory')]
-    public function base(ManagerRegistry $doctrine, Request $request)
+    public function createCategory(ManagerRegistry $doctrine, Request $request)
     {
 
         $category = new Category();
