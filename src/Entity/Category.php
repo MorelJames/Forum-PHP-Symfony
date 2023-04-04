@@ -18,7 +18,7 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'categories')]
     private Collection $posts;
 
     public function __construct()
