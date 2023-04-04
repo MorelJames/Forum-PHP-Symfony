@@ -14,6 +14,8 @@ class AdminAllPostController extends AbstractController
     #[Route('/allPostAdmin', name: 'app_allPostAdmin')]
     public function base(ManagerRegistry $doctrine)
     {
+        // autorise uniquement les administrateurs, sinon erreur
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
         $allPost = $doctrine->getRepository(Post::class)->findAll();
 
