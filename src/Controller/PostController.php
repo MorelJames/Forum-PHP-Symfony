@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class PostController extends AbstractController
 {
 
-    #[Route('/postController/{postId}', name:"post")]
+    #[Route('/postController/{postId}', name: "post")]
     public function showPost(ManagerRegistry $doctrine, Request $request, Int $postId)
     {
         $post = $doctrine->getRepository(Post::class)->find($postId);
@@ -43,7 +43,7 @@ class PostController extends AbstractController
             $entity->persist($comment);
             $entity->flush();
 
-            $allComments = $doctrine->getRepository(Comment::class)->findBy(['post'=>$post]);
+            $allComments = $doctrine->getRepository(Comment::class)->findBy(['post' => $post]);
 
             return $this->render('/Post.html.twig', [
                 'post' => $post,
@@ -52,7 +52,7 @@ class PostController extends AbstractController
             ]);
         }
 
-        $allComments = $doctrine->getRepository(Comment::class)->findBy(['post'=>$post]);
+        $allComments = $doctrine->getRepository(Comment::class)->findBy(['post' => $post]);
         return $this->render('/Post.html.twig', [
             'post' => $post,
             'formComment' => $formComment->createView(),
