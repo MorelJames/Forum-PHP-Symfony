@@ -19,7 +19,7 @@ class AdminAllPostController extends AbstractController
 
         $allPost = $doctrine->getRepository(Post::class)->findAll();
 
-        return $this->render('/AllPost.html.twig', [
+        return $this->render('Post/AllPost.html.twig', [
             'allPost' => $allPost,
         ]);
     }

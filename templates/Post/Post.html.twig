@@ -1,0 +1,24 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+   
+   <h1>{{post.getTitle()}}</h1>
+   <p>{{post.getContent()}}</p>
+
+   {{form(formComment)}}
+
+   <h2>Comments</h2>
+   <div class ="PostComments">
+      {% for comment in post.comments %}
+         {% include 'Comment/Comment.html.twig' with {
+            content: comment.content,
+            date : comment.createdAt.format('d-m-Y'),
+            username : comment.user.username,
+            IdComment: comment.id,
+            } only %}
+
+
+      {% endfor %}
+   </div>
+
+{% endblock %}

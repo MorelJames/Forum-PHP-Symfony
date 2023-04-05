@@ -1,0 +1,17 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+   
+    {% for post in allPost %}
+        <div class= "post">
+            <a href="{{ path('post', {'postId': post.id}) }}">{{post.title}}</a>
+            <p>{{post.content}}</p> 
+            {% if is_granted('ROLE_ADMIN') %}
+                {% include 'Post/RemovePost.html.twig' with {
+                    postId: post.id
+                } only %}
+            {% endif %}
+        </div>
+    {% endfor %} 
+
+{% endblock %}

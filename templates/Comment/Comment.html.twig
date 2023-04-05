@@ -1,0 +1,11 @@
+<div class = "comment">
+    <p class = "username">{{username}}</p>
+    <p class = "date">{{date}}</p>
+    <p class = "content">{{content}}</p>
+    {% if is_granted('ROLE_ADMIN') %}
+        {% include 'Comment/RemoveComment.html.twig' with {
+            commentId: IdComment
+        } only %}
+    {% endif %}
+    
+</div>

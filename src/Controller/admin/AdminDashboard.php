@@ -16,8 +16,8 @@ class AdminDashboard extends AbstractController{
     ){}
 
     #[Route('/adminDashboard', name:'app_admindashboard')]
-    public function index(){
-
+    public function index(ManagerRegistry $doctrine){
+        $this->setAdmin($doctrine);
         return $this->render('adminDashboard.html.twig',[
             'user'=>$this->security->getUser(),
         ]);
