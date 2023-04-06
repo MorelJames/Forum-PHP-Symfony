@@ -1,0 +1,22 @@
+.postModel{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 3%;
+
+    div{
+        display: grid;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .title{
+        font-size: larger;
+    }
+    .username{
+        display: flex;
+        font-size: smaller;
+        justify-self: center;
+    }
+}

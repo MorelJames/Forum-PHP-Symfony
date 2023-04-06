@@ -1,0 +1,11 @@
+<a href="{{ path('post', {'postId': post.id}) }}">
+    <div class="postModel">
+        <div>
+            <p class="title">  {{post.title}} </p>
+            <p class="username"> {{post.user.username}} </p>
+        </div>
+        <div>
+            <p class="postDate"> {{post.publishedAt.format('d M Y')}} </p>
+        </div>
+    </div>
+</a>

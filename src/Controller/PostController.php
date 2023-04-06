@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
-use App\Entity\User;
+use App\Form\PostType;
 use App\Form\CommentType;
 use Monolog\DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,6 +48,41 @@ class PostController extends AbstractController
         return $this->render('Post/Post.html.twig', [
             'post' => $post,
             'formComment' => $formComment->createView(),
+        ]);
+    }
+
+    #[Route('/createPost', name: "createPost")]
+    public function createPost(ManagerRegistry $doctrine, Request $request, Security $security)
+    {
+        $post = new Post();
+
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+
+        $user = $security->getUser();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post = $form->getData();
+
+            $post->setPublishedAt(new DateTimeImmutable(false));
+
+            $post->setSlug('/' . $post->getTitle());
+
+            $post->setUser($user);
+
+            $entity = $doctrine->getManager();
+
+            $entity->persist($post);
+            $entity->flush();
+
+            return $this->redirectToRoute('post',[
+                'postId' => $post->getId(),
+            ]);
+        }
+
+        return $this->render('/AdminPost.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

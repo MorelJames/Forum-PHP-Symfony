@@ -1,0 +1,19 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+
+
+    <div class="categoryInfo">
+        <h1> {{category.name}} </h1>
+        {# TODO : ajouter le category.description#}
+    </div>
+
+    <div class="posts">
+        {% for post in category.posts %}
+            {% include 'Post/PostModel.html.twig' with {
+                post: post,
+            } only %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

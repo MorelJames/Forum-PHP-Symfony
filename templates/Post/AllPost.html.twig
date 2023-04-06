@@ -2,8 +2,6 @@
 
 {% block body%}
 
-   {{form(form)}}
-
     {% for post in allPost %}
         <div class= "post">
             <a href="{{ path('post', {'postId': post.id}) }}">{{post.title}}</a>

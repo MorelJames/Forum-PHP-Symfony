@@ -14,13 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
 class CategoryController extends AbstractController
 {
 
-    #[Route('/Category', name: 'app_category')]
-    public function Category(ManagerRegistry $doctrine, EntityManagerInterface $entityManager)
+    #[Route('/Category/allCategory', name: 'app_allCategory')]
+    public function AllCategory(ManagerRegistry $doctrine, EntityManagerInterface $entityManager)
     {
-
         $categories = $doctrine->getRepository(Category::class)->findAll();
-
-        $date = new \Datetime();
 
         $posts = $entityManager
                  ->getRepository(Post::class)->getThreeLastPosts();
@@ -28,6 +25,16 @@ class CategoryController extends AbstractController
         return $this->render('Category/AllCategory.html.twig', [
             'categories' => $categories,
             'newPosts' => $posts
+        ]);
+    }
+
+    #[Route('/Category/{categId}', name: 'app_Category')]
+    public function Category(ManagerRegistry $doctrine, Int $categId)
+    {
+        $category = $doctrine->getRepository(Category::class)->find($categId);
+
+        return $this->render('Category/Category.html.twig', [
+            'category' => $category,
         ]);
     }
     
