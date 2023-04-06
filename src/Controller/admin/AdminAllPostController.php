@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Post;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,12 +16,23 @@ class AdminAllPostController extends AbstractController
     public function base(ManagerRegistry $doctrine)
     {
         // autorise uniquement les administrateurs, sinon erreur
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        #$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
         $allPost = $doctrine->getRepository(Post::class)->findAll();
 
         return $this->render('/AllPost.html.twig', [
             'allPost' => $allPost,
         ]);
+    }
+
+    #[Route('/signalPost/{postId}', name: 'app_signal_post')]
+    public function signalPost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
+    {
+        $post = $doctrine->getRepository(Post::class)->find($postId);
+        $post->setSignaled(true);
+        $entity = $doctrine->getManager();
+        $entity->flush();
+
+        return $this->redirectToRoute('app_allPostAdmin');
     }
 }

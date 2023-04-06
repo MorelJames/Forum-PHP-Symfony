@@ -4,9 +4,12 @@ namespace App\Controller\admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use App\Entity\User;
+use App\Entity\Post;
+use App\Entity\Comment;
 use Doctrine\Persistence\ManagerRegistry;
 
 class AdminDashboard extends AbstractController{
@@ -21,6 +24,7 @@ class AdminDashboard extends AbstractController{
         return $this->render('adminDashboard.html.twig',[
             'user'=>$this->security->getUser(),
         ]);
+
     }
 
     public function setAdmin(ManagerRegistry $doctrine)
@@ -31,5 +35,31 @@ class AdminDashboard extends AbstractController{
         $user->setRoles(['ROLE_ADMIN']);
         $entity = $doctrine->getManager();
         $entity->flush();
+    }
+
+    #[Route('/signaledPosts', name:'app_signaledPosts')]
+    public function showSignaledPosts(ManagerRegistry $doctrine)
+    {
+        $allPosts = $doctrine->getRepository(Post::class)->findAll();
+
+        return $this->render('/SignaledPosts.html.twig', [
+            'allPosts' => $allPosts,
+        ]);
+    }
+
+    #[Route('/validatePost/{postId}', name: 'app_validate_post')]
+    public function validatePost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
+    {
+        $post = $doctrine->getRepository(Post::class)->find($postId);
+        $post->setSignaled(false);
+        $entity = $doctrine->getManager();
+        $entity->flush();
+
+        return $this->redirectToRoute('app_signaledPosts');
+    }
+
+    public function validateComment(Comment $comment)
+    {
+
     }
 }
