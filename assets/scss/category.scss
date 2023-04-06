@@ -1,0 +1,17 @@
+.categoryIntro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+}
+
+.allCategory{
+    width: 60%;
+}
+
+.category{
+    border: 2px white solid;
+    padding: 2%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}

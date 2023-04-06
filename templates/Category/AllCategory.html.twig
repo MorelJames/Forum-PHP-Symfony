@@ -1,0 +1,35 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+
+    <div class="categoryIntro">
+        <h1>DISCUSSIONS ET POSTS</h1>
+        <p>Explorez le forum ci-dessous pour partager votre expérience sur Draw'n Rogue</p>
+    </div>
+
+    <div class="allCategory">
+        {% for category in categories %}
+            <div class="category">
+                <h1> {{category.name}} </h1>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="newPost">
+        {% for post in newPosts %}
+            <div class="post">
+                <div>
+                    <p> {{post.user.username}}</p>
+                    <p> {{post.publishedAt}} </p>
+                </div>
+                <p> {{post.title}} </p>
+                <div>
+                    {% for categ in post.categories %}
+                        <p> {{categ.name}} </p>
+                    {% endfor %}
+                </div>
+                <p> {{post.content}} </p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
