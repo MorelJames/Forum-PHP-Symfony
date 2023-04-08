@@ -1,0 +1,21 @@
+.postComments{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.allComment{
+    width: 100%;
+    :first-child{
+        border: none;
+    }
+}
+
+.postContent{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5%;
+}

@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     margin: 2%;
+    margin-bottom: 8%;
 }
 
 .allCategory{
@@ -13,7 +14,7 @@
     border: 1px white solid;
     width: 100%;
     padding: 2%;
-    margin-top: 8%;
+    margin-bottom: 8%;
     margin-bottom: 8%;
     display: flex;
 
@@ -36,6 +37,7 @@
         border: 1px white solid;
         padding: 2%;
         width: 100%;
+        aspect-ratio: 1/1;
 
         .postCategory{
             display: flex;
@@ -61,6 +63,7 @@
 
         p{
             max-width: 90%;
+            height: 25%;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -69,4 +72,8 @@
 
 .posts{
     width: 60%;
+}
+
+.categoryInfo{
+    margin-bottom: 5%;
 }

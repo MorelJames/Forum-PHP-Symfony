@@ -5,9 +5,11 @@
 
     <div class="categoryInfo">
         <h1> {{category.name}} </h1>
+        <p>description</p>
         {# TODO : ajouter le category.description#}
     </div>
 
+    {% include 'Post/CreatePostButton.html.twig'%}
     <div class="posts">
         {% for post in category.posts %}
             {% include 'Post/PostModel.html.twig' with {

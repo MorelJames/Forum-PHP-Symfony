@@ -4,8 +4,14 @@
     width: inherit;
    a{
     margin: 2%;
-    width: fit-content;
-    text-decoration: none;
-    color: white;
    }
+
+   :hover{
+        color: darkorange;
+   }
+}
+
+.active{
+    text-decoration: underline;
+    color: darkorange;
 }

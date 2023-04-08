@@ -2,23 +2,26 @@
 
 {% block body%}
    
-   <h1>{{post.getTitle()}}</h1>
-   <p>{{post.getContent()}}</p>
+   <div class="postContent">
+      <h1>{{post.getTitle()}}</h1>
+      <p>{{post.getContent()}}</p>
+   </div>
 
-   {{form(formComment)}}
+   <div class ="postComments">
+      <h2>Comments</h2>
+      {{form(formComment)}}
+      <div class="allComment">
+         {% for comment in post.comments %}
+            {% include 'Comment/Comment.html.twig' with {
+               content: comment.content,
+               date : comment.createdAt.format('d-m-Y'),
+               username : comment.user.username,
+               IdComment: comment.id,
+               } only %}
 
-   <h2>Comments</h2>
-   <div class ="PostComments">
-      {% for comment in post.comments %}
-         {% include 'Comment/Comment.html.twig' with {
-            content: comment.content,
-            date : comment.createdAt.format('d-m-Y'),
-            username : comment.user.username,
-            IdComment: comment.id,
-            } only %}
 
-
-      {% endfor %}
+         {% endfor %}
+      </div>
    </div>
 
 {% endblock %}

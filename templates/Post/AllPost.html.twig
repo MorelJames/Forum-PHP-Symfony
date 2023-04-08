@@ -2,16 +2,15 @@
 
 {% block body%}
 
-    {% for post in allPost %}
-        <div class= "post">
-            <a href="{{ path('post', {'postId': post.id}) }}">{{post.title}}</a>
-            <p>{{post.content}}</p> 
-            {% if is_granted('ROLE_ADMIN') %}
-                {% include 'Post/RemovePost.html.twig' with {
-                    postId: post.id
+    {% include 'Post/CreatePostButton.html.twig'%}
+    <div class="posts">
+        {% for post in allPost %}
+
+            {% include 'Post/PostModel.html.twig' with {
+                    post: post
                 } only %}
-            {% endif %}
-        </div>
-    {% endfor %} 
+
+        {% endfor %} 
+    </div>
 
 {% endblock %}

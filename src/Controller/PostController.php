@@ -39,6 +39,12 @@ class PostController extends AbstractController
             $entity->persist($comment);
             $entity->flush();
 
+            unset($comment);
+            unset($formComment);
+            $comment = new Comment();
+
+            $formComment = $this->createForm(CommentType::class, $comment);
+
             return $this->render('Post/Post.html.twig', [
                 'post' => $post,
                 'formComment' => $formComment->createView(),
@@ -81,7 +87,7 @@ class PostController extends AbstractController
             ]);
         }
 
-        return $this->render('/AdminPost.html.twig', [
+        return $this->render('Post/createPost.html.twig', [
             'form' => $form->createView()
         ]);
     }

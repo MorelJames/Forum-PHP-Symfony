@@ -1,11 +1,21 @@
 <a href="{{ path('post', {'postId': post.id}) }}">
-    <div class="postModel">
+    <div class="postModel hoverable">
         <div>
-            <p class="title">  {{post.title}} </p>
-            <p class="username"> {{post.user.username}} </p>
+            <p>{{post.title}}</p>
+            <p> {{post.user.username}} </p>
         </div>
-        <div>
-            <p class="postDate"> {{post.publishedAt.format('d M Y')}} </p>
+
+        <div class="stats">
+            <div>
+                <img src="{{ asset('/svg/eye-svgrepo-com.svg')}}" >
+                <p> 0 </p> {#mettre le conteur de vue #}
+            </div>
+            <div>
+                <img src="{{ asset('/svg/bubbles-svgrepo-com.svg')}}" >
+                <p> {{ post.comments|length }} </p>
+            </div>
+            <p> {{post.publishedAt.format('d M Y')}} </p>
         </div>
+            
     </div>
 </a>
