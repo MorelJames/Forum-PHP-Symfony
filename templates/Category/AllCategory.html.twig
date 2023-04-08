@@ -1,0 +1,43 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+
+    <div class="categoryIntro">
+        <h1>TALK AND POSTS</h1>
+        <p>Explore this forum to and share your experience on Draw'n Rogue</p>
+    </div>
+
+    {% include 'Post/CreatePostButton.html.twig'%}
+
+    <div class="allCategory">
+        {% for category in categories %}
+            <a href="{{ path('app_Category', {'categId': category.id}) }}">
+                <div class="category hoverable">
+                    <p>{{category.name}}</p>  
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <p>New Posts </p>
+    <div class="newPost">
+        {% for post in newPosts %}
+            <a href="{{ path('post', {'postId': post.id}) }}">
+                <div class="post hoverable">
+                    <div>
+                        <p class="username"> {{post.user.username}}</p>
+                        <p class="postDate"> {{post.publishedAt.format('d M Y H:i')}} </p>
+                    </div>
+                    <p class="postTitle"> {{post.title}} </p>
+                    <p class="postContent"> {{post.content}} </p>
+
+                    <div class="postCategory">
+                        {% for categ in post.categories %}
+                            <p> {{categ.name}} </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

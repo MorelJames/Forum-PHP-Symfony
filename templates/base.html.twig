@@ -9,21 +9,22 @@
     </head>
     <body>
         {% block header %}
-            <ul class = "menuHeader">
+            <div class = "menuHeader">
                 {% if name is defined %}
-                    <li><a href="{{ path('adminComment', {'name': name}) }}">Home</a></li>
+                    <a href="{{ path('adminComment', {'name': name}) }}">Home</a>
                 {% else %}
-                    <li><a href="{{ path('adminComment', {'name': 'pour quand il y a pas de nom'}) }}">Home</a></li>
+                    <a href="{{ path('adminComment', {'name': 'pour quand il y a pas de nom'}) }}">Home</a>
                 {% endif %}
-                <li><a href="#">Category</a>
-                    <ul class = 'sousMenuCategory'>
-                        <li><a href="{{ path('adminCategory', {'category': 'Cards'}) }}">Cards</a></li>
-                        <li><a href="{{ path('adminCategory', {'category': 'Map'}) }}">Map</a></li>
-                        <li><a href="{{ path('adminCategory', {'category': 'Bugs'}) }}">Bugs</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Sign in</a></li>
-            </ul>
+                <a href="{{ path('app_allCategory') }}",
+                    class="{% if (app.request.pathInfo == path('app_allCategory')) %} active{% endif %}"
+                    ><p>Category</p></a>
+
+                <a href="{{ path('app_allPostAdmin') }}",
+                    class="{% if (app.request.pathInfo == path('app_allPostAdmin')) %} active{% endif %}"
+                    ><p>All posts</p></a>
+                <a href="{{ path('adminCategory', {'category': 'Bugs'}) }}">My posts</a>
+                <a href="#">Sign in</a>
+            </div>
         {% endblock %}
         
         {% block body %}{% endblock %}

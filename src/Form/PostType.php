@@ -17,14 +17,23 @@ class PostType extends AbstractType
     {
 
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Title'
+                )))
             ->add('categories', EntityType::class, array(
                 'class' => 'App\Entity\Category',
                 'multiple' => true,
                 'choice_label' => 'name',
+                'label' => false
             ))
-            ->add('content', TextareaType::class)
-            ->add('save', SubmitType::class);
+            ->add('content', TextareaType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Content'
+                )))
+            ->add('Submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

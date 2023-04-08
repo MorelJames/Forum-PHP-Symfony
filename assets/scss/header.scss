@@ -1,5 +1,17 @@
 .menuHeader {
     display: flex;
-    justify-content: right;
-    background-color: black;
+    justify-content: center;
+    width: inherit;
+   a{
+    margin: 2%;
+   }
+
+   :hover{
+        color: darkorange;
+   }
+}
+
+.active{
+    text-decoration: underline;
+    color: darkorange;
 }

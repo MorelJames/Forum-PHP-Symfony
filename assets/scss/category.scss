@@ -1,0 +1,79 @@
+.categoryIntro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+    margin-bottom: 8%;
+}
+
+.allCategory{
+    width: 60%;
+}
+
+.category{
+    border: 1px white solid;
+    width: 100%;
+    padding: 2%;
+    margin-bottom: 8%;
+    margin-bottom: 8%;
+    display: flex;
+
+    p{
+        font-size: xx-large;
+    }
+}
+
+.newPost{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+
+    a{
+        width: 32%;
+        margin: 1%;
+    }
+
+    .post{
+        border: 1px white solid;
+        padding: 2%;
+        width: 100%;
+        aspect-ratio: 1/1;
+
+        .postCategory{
+            display: flex;
+            flex-direction: row;
+            margin-top: 6%;
+            p{
+                border-radius: 10px;
+                border: 1px lightgrey solid;   
+                padding: 1%;
+                margin: 1%;
+                color: lightgrey;
+            }
+            
+        }
+        .postDate{
+            color: lightgrey;
+            font-size: smaller;
+        }
+
+        .username, .postTitle{
+            font-size: larger;
+        }
+
+        p{
+            max-width: 90%;
+            height: 25%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.posts{
+    width: 60%;
+}
+
+.categoryInfo{
+    margin-bottom: 5%;
+}
