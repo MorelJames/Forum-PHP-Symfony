@@ -3,13 +3,11 @@
 {% block body%}
    
     {% for post in allPost %}
-        {% if not post.getSignaled() %}
-            <div class= "post">
-                <a href="{{ path('app_signal_post', {'postId' : post.getId()}) }}">Signaler?</a>
-                <a href="{{ path('post', {'postId': post.getId()}) }}">{{post.getTitle()}}</a>
-                <p>{{post.getContent()}}</p>
-            </div>
-        {% endif %}
+        <div class= "post">
+            <a href="{{ path('app_signal_post', {'postId' : post.getId()}) }}">Signaler?</a>
+            <a href="{{ path('post', {'postId': post.getId()}) }}">{{post.getTitle()}}</a>
+            <p>{{post.getContent()}}</p>
+        </div>
     {% endfor %} 
 
 {% endblock %}

@@ -19,12 +19,18 @@ class AdminDashboard extends AbstractController{
     ){}
 
     #[Route('/adminDashboard', name:'app_admindashboard')]
-    public function index(){
+    public function index(ManagerRegistry $doctrine){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
+        $userId = $this->security->getUser()->getId();
+        $user = $doctrine->getRepository(User::class)->find($userId);
+        if(!$user->isVerified()) {
+            return $this->render('requireValidation.html.twig');
+        }
 
         return $this->render('adminDashboard.html.twig',[
             'user'=>$this->security->getUser(),
         ]);
-
     }
 
     public function setAdmin(ManagerRegistry $doctrine)
@@ -33,6 +39,16 @@ class AdminDashboard extends AbstractController{
         $userId = $this->security->getUser()->getId();
         $user = $doctrine->getRepository(User::class)->find($userId);
         $user->setRoles(['ROLE_ADMIN']);
+        $entity = $doctrine->getManager();
+        $entity->flush();
+    }
+
+    public function setBlogger(ManagerRegistry $doctrine)
+    {
+        # TODO : gérer le fait que l'utilisateur de la session n'est pas mis à jour
+        $userId = $this->security->getUser()->getId();
+        $user = $doctrine->getRepository(User::class)->find($userId);
+        $user->setRoles(['ROLE_BLOG']);
         $entity = $doctrine->getManager();
         $entity->flush();
     }
@@ -55,6 +71,11 @@ class AdminDashboard extends AbstractController{
         $entity = $doctrine->getManager();
         $entity->flush();
 
+        return $this->redirectToRoute('app_signaledPosts');
+    }
+
+    public function deletePost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
+    {
         return $this->redirectToRoute('app_signaledPosts');
     }
 

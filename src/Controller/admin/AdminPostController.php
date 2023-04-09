@@ -12,13 +12,24 @@ use App\Form\CommentType;
 use App\Form\PostType;
 use Monolog\DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 class AdminPostController extends AbstractController
 {
+    public function __construct(
+        private Security $security,
+    ){}
 
     #[Route('/postAdmin', name: 'app_postAdmin')]
     public function base(ManagerRegistry $doctrine, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_BLOG', null, 'User tried to access a page without having ROLE_ADMIN');
+
+        $userId = $this->security->getUser()->getId();
+        $user = $doctrine->getRepository(User::class)->find($userId);
+        if(!$user->isVerified()) {
+            return $this->render('requireValidation.html.twig');
+        }
 
         $post = new Post();
         
