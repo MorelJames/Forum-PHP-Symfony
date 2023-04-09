@@ -13,3 +13,7 @@ adminComment:
 adminCategory:
     path: /categoryAdmin/{category}
     controller: 'App\Controller\admin\AdminCommentController::base'
+
+default_target_path:
+    path: /
+    controller: 'App\Controller\CategoryController::AllCategory'

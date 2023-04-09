@@ -23,7 +23,13 @@
                     class="{% if (app.request.pathInfo == path('app_allPostAdmin')) %} active{% endif %}"
                     ><p>All posts</p></a>
                 <a href="{{ path('adminCategory', {'category': 'Bugs'}) }}">My posts</a>
-                <a href="#">Sign in</a>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path('app_logout') }}">Log out</a>
+                {% else %}
+                    <a href="#">Log in</a>
+                {% endif %}
+                
             </div>
         {% endblock %}
         
