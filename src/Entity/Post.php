@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -20,6 +21,12 @@ class Post
 
     #[ORM\Column(length: 255)]
     private ?string $content = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagepath = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $hasImage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
@@ -80,6 +87,29 @@ class Post
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getHasImage() : ?bool
+    {
+        return $this->hasImage;
+    }
+    public function setHasImage(bool $hasImage) : self
+    {
+        $this->hasImage = $hasImage;
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagepath;
+    }
+
+    public function setImagePath(string $imagepath): self
+    {
+        $this->imagepath = $imagepath;
 
         return $this;
     }

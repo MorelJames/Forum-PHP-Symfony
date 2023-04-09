@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Post;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PostType extends AbstractType
 {
@@ -27,12 +28,16 @@ class PostType extends AbstractType
                 'multiple' => true,
                 'choice_label' => 'name',
                 'label' => false
-            ))
+                ))
             ->add('content', TextareaType::class, array(
                 'label' => false,
                 'attr' => array(
                     'placeholder' => 'Content'
                 )))
+            ->add('imageFile', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('Submit', SubmitType::class);
     }
 

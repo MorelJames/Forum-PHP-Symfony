@@ -16,6 +16,11 @@
             {% endif %}
          </div>
       </div>
+      {% if post.getHasImage() %}
+         <div class="postImage">
+            <img src="{{ asset('/images')}}/{{ post.getImagePath() }}" alt="image">
+         </div>
+      {% endif %}
       <p>{{post.getContent()}}</p>
    </div>
 

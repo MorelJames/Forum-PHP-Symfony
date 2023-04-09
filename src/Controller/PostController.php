@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
@@ -70,9 +72,11 @@ class PostController extends AbstractController
     }
 
     #[Route('/createPost', name: "createPost")]
-    public function createPost(ManagerRegistry $doctrine, Request $request, Security $security)
+    public function createPost(ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager)
     {
         $this->denyAccessUnlessGranted('ROLE_BLOG', null, 'User tried to access a page without having ROLE_BLOG');
+
+        $img_path = $this->getParameter('images_directory');
 
         $post = new Post();
 
@@ -93,8 +97,33 @@ class PostController extends AbstractController
 
             $entity = $doctrine->getManager();
 
+            $query = $entityManager->createQuery(
+                'SELECT MAX(e.id) FROM App\Entity\Post e'
+            );
+            $newId = $query->getSingleScalarResult() + 1;
+
+            $imageFile = $form->get('imageFile')->getData();
+            $imageName = $newId.'.'.$imageFile->guessExtension();
+
+            if ($imageFile !=null) {
+                try {
+                    $imageFile->move(
+                        $img_path,
+                        $imageName
+                    );
+                    $post->setHasImage(true);
+                    $post->setImagePath($imageName);
+                } catch (FileException $e) {
+                    $post->setHasImage(false);
+                }
+            }
+            else {
+                $post->setHasImage(false);
+            }
+
             $entity->persist($post);
             $entity->flush();
+
 
             return $this->redirectToRoute('post',[
                 'postId' => $post->getId(),
