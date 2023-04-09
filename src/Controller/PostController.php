@@ -29,9 +29,11 @@ class PostController extends AbstractController
 
         $session = $request->getSession();
         $page = '/postController/'.$post->getId();
-        if ($session->get('page') != $page) {
+        if (!$session->has('pages') || !in_array($page,$session->get('pages'))) {
             $post->incrementView();
-            $session->set('page', $page);
+            $pages = $session->get('pages');
+            $pages[] = $page;
+            $session->set('pages', $pages);
             $entity = $doctrine->getManager();
             $entity->flush();
         }
