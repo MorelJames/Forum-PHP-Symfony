@@ -27,6 +27,15 @@ class PostController extends AbstractController
         $formComment->handleRequest($request);
         $user = $security->getUser();
 
+        $session = $request->getSession();
+        $page = '/postController/'.$post->getId();
+        if ($session->get('page') != $page) {
+            $post->incrementView();
+            $session->set('page', $page);
+            $entity = $doctrine->getManager();
+            $entity->flush();
+        }
+
         if ($formComment->isSubmitted() && $formComment->isValid()) {
 
             $entity = $doctrine->getManager();
@@ -39,15 +48,8 @@ class PostController extends AbstractController
             $entity->persist($comment);
             $entity->flush();
 
-            unset($comment);
-            unset($formComment);
-            $comment = new Comment();
-
-            $formComment = $this->createForm(CommentType::class, $comment);
-
-            return $this->render('Post/Post.html.twig', [
-                'post' => $post,
-                'formComment' => $formComment->createView(),
+            return $this->redirectToRoute('post',[
+                'postId' => $post->getId(),
             ]);
         }
 

@@ -40,6 +40,9 @@ class Post
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?int $view = 0;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -177,6 +180,17 @@ class Post
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getView(): int
+    {
+        return $this->view;
+    }
+
+    public function incrementView(): self
+    {
+        $this->view = $this->view+1;
         return $this;
     }
 }
