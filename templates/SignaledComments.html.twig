@@ -1,0 +1,15 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+   
+    {% for comment in allComments %}
+        {% if comment.getSignaled() %}
+            <div class= "comment">
+                <a href="{{ path('app_validate_comment', {'commentId' : comment.getId()}) }}">Valider?</a>
+                <a href="{{ path('app_admin_rmcomment', {'commentId' : comment.getId()}) }}">Supprimer?</a>
+                <p>{{comment.getContent()}}</p>
+            </div>
+        {% endif %}
+    {% endfor %} 
+
+{% endblock %}

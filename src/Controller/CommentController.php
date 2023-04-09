@@ -13,6 +13,8 @@ class CommentController extends AbstractController
     #[Route('/removeComment/{commentId}', name: "rmComment")]
     public function removeComment(ManagerRegistry $doctrine, Int $commentId)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
         $comment = $doctrine->getRepository(Comment::class)->find($commentId);
         $postId = $comment->getPost()->getId();
         $entity = $doctrine->getManager();

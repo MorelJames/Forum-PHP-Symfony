@@ -42,7 +42,8 @@ class CategoryController extends AbstractController
     #[Route('/createCategory', name: 'app_createCategory')]
     public function createCategory(ManagerRegistry $doctrine, Request $request)
     {
-
+        $this->denyAccessUnlessGranted('ROLE_BLOG', null, 'User tried to access a page without having ROLE_BLOG');
+        
         $category = new Category();
 
         $form = $this->createForm(CategoryType::class, $category);

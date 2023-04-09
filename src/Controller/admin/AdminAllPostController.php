@@ -39,15 +39,4 @@ class AdminAllPostController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    #[Route('/signalPost/{postId}', name: 'app_signal_post')]
-    public function signalPost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
-    {
-        $post = $doctrine->getRepository(Post::class)->find($postId);
-        $post->setSignaled(true);
-        $entity = $doctrine->getManager();
-        $entity->flush();
-
-        return $this->redirectToRoute('app_allPostAdmin');
-    }
 }

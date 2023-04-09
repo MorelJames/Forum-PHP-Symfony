@@ -16,14 +16,12 @@ use Symfony\Component\Security\Core\Security;
 
 class AdminPostController extends AbstractController
 {
-    public function __construct(
-        private Security $security,
-    ){}
+    public function __construct(private Security $security){}
 
     #[Route('/postAdmin', name: 'app_postAdmin')]
     public function base(ManagerRegistry $doctrine, Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_BLOG', null, 'User tried to access a page without having ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_BLOG', null, 'User tried to access a page without having ROLE_BLOG');
 
         $userId = $this->security->getUser()->getId();
         $user = $doctrine->getRepository(User::class)->find($userId);
@@ -66,5 +64,23 @@ class AdminPostController extends AbstractController
         return $this->render('/AdminPost.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/signalPost/{postId}', name: 'app_signal_post')]
+    public function signalPost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
+    {
+        $userId = $this->security->getUser()->getId();
+        $user = $doctrine->getRepository(User::class)->find($userId);
+
+        if(!$user->isVerified()) {
+            return $this->render('requireValidation.html.twig');
+        }
+        
+        $post = $doctrine->getRepository(Post::class)->find($postId);
+        $post->setSignaled(true);
+        $entity = $doctrine->getManager();
+        $entity->flush();
+
+        return $this->redirectToRoute('/postController/'.$postId);
     }
 }

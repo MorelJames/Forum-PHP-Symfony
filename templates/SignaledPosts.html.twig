@@ -6,6 +6,7 @@
         {% if post.getSignaled() %}
             <div class= "post">
                 <a href="{{ path('app_validate_post', {'postId' : post.getId()}) }}">Valider?</a>
+                <a href="{{ path('app_admin_rmpost', {'postId' : post.getId()}) }}">Supprimer?</a>
                 <p>{{post.getContent()}}</p>
             </div>
         {% endif %}
