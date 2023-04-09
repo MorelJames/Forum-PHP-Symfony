@@ -6,6 +6,7 @@ use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Post;
 use App\Form\ChooseCategoryType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,8 +17,6 @@ class AdminAllPostController extends AbstractController
     #[Route('/allPostAdmin', name: 'app_allPostAdmin')]
     public function base(ManagerRegistry $doctrine, Request $request)
     {
-        // autorise uniquement les administrateurs, sinon erreur
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $form = $this->createForm(ChooseCategoryType::class);
 
         $form->handleRequest($request);
@@ -39,5 +38,16 @@ class AdminAllPostController extends AbstractController
             'allPost' => $allPost,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/signalPost/{postId}', name: 'app_signal_post')]
+    public function signalPost(Request $request, ManagerRegistry $doctrine, Int $postId) : Response
+    {
+        $post = $doctrine->getRepository(Post::class)->find($postId);
+        $post->setSignaled(true);
+        $entity = $doctrine->getManager();
+        $entity->flush();
+
+        return $this->redirectToRoute('app_allPostAdmin');
     }
 }

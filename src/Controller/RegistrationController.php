@@ -16,19 +16,24 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Security\Core\Security;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
-    {
+    public function __construct(private Security $security, EmailVerifier $emailVerifier){
         $this->emailVerifier = $emailVerifier;
     }
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        if ($this->security->getUser())
+        {
+            return $this->redirectToRoute('app_allPostAdmin');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -42,6 +47,8 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setRoles(['ROLE_USER']);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -54,8 +61,7 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_register');
+            return $this->render('requireValidation.html.twig');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -91,6 +97,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_allPostAdmin');
+        return $this->redirectToRoute('app_login');
     }
 }

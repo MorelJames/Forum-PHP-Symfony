@@ -30,6 +30,9 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isSignaled = false;
+
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
     private Collection $categories;
 
@@ -110,6 +113,18 @@ class Post
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSignaled() : bool
+    {
+        return $this->isSignaled;
+    }
+
+    public function setSignaled(bool $signal) : self
+    {
+        $this->isSignaled = $signal;
 
         return $this;
     }

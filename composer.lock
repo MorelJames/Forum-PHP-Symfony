@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47e7bc627a4540814c7e622f0861e8c4",
+    "content-hash": "16a8ad302e5d9d5a34dfbf9026419f8c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -5617,22 +5617,22 @@
         },
         {
             "name": "symfony/security-bundle",
-            "version": "v6.1.0",
+            "version": "v6.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-bundle.git",
-                "reference": "8c4e4b13973d9d246ef38a455f70006e5897ff92"
+                "reference": "fbe14faff3dbae154d0004b254a201e930f3d8e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/8c4e4b13973d9d246ef38a455f70006e5897ff92",
-                "reference": "8c4e4b13973d9d246ef38a455f70006e5897ff92",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/fbe14faff3dbae154d0004b254a201e930f3d8e0",
+                "reference": "fbe14faff3dbae154d0004b254a201e930f3d8e0",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": ">=2.1",
                 "ext-xml": "*",
-                "php": ">=8.1",
+                "php": ">=8.0.2",
                 "symfony/config": "^5.4|^6.0",
                 "symfony/dependency-injection": "^5.4|^6.0",
                 "symfony/event-dispatcher": "^5.4|^6.0",
@@ -5641,7 +5641,7 @@
                 "symfony/password-hasher": "^5.4|^6.0",
                 "symfony/security-core": "^5.4|^6.0",
                 "symfony/security-csrf": "^5.4|^6.0",
-                "symfony/security-http": "^5.4|^6.0"
+                "symfony/security-http": "^5.4.20|~6.0.20|~6.1.12|^6.2.6"
             },
             "conflict": {
                 "symfony/browser-kit": "<5.4",
@@ -5651,7 +5651,7 @@
                 "symfony/twig-bundle": "<5.4"
             },
             "require-dev": {
-                "doctrine/annotations": "^1.10.4",
+                "doctrine/annotations": "^1.10.4|^2",
                 "symfony/asset": "^5.4|^6.0",
                 "symfony/browser-kit": "^5.4|^6.0",
                 "symfony/console": "^5.4|^6.0",
@@ -5697,7 +5697,7 @@
             "description": "Provides a tight integration of the Security component into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-bundle/tree/v6.1.0"
+                "source": "https://github.com/symfony/security-bundle/tree/v6.0.20"
             },
             "funding": [
                 {
@@ -5713,7 +5713,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-23T10:32:57+00:00"
+            "time": "2023-01-30T15:41:07+00:00"
         },
         {
             "name": "symfony/security-core",
