@@ -1,7 +1,11 @@
 {% extends "base.html.twig"%}
 
 {% block body%}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Email: {{ app.user.email }}</p>
-    {% endif %}
+    <h1>Dashboard</h1>
+
+    <div class="dashActions">
+        <a href="{{ path('app_signaledComments') }}", class="dashButton">Signaled comments</a>
+        <a href="{{ path('app_signaledPosts') }}", class="dashButton">Signaled posts</a>
+        <a href="{{ path('app_adminMangeUserRole') }}", class="dashButton">Manage users role</a>
+    </div>
 {% endblock %}

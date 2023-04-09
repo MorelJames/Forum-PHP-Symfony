@@ -1,0 +1,22 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+    <h1>Signaled comments</h1>
+    {% for comment in allComments %}
+        {% if comment.getSignaled() %}
+            <div class= "signaledComment">
+                <div class="commentInfo">
+                    <p class="commentContent">{{comment.getContent()}}</p>
+                    <p class="username">Posted by: {{comment.user.username}}</p>
+                    <p class="reportingDate">reported at: {{comment.reportedAt.format('d-M-Y H:i')}}</p>
+                    <a href="{{ path('post', {'postId' : comment.post.id}) }}", class="relatedPost", target='blank'><p>Related post</p></a>
+                </div>
+                <div class="decision">
+                    <a href="{{ path('app_validate_comment', {'commentId' : comment.getId()}) }}"><p>Valid</p></a>
+                    <a href="{{ path('app_admin_rmcomment', {'commentId' : comment.getId()}) }}"><p>Delete</p></a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %} 
+
+{% endblock %}

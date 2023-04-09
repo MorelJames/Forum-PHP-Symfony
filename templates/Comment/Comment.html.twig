@@ -5,13 +5,16 @@
         <p class = "content">{{content}}</p>
     </div>
     
-    {% if is_granted('ROLE_ADMIN') %}
-        <div>
-            {% include 'Comment/RemoveComment.html.twig' with {
-                commentId: IdComment
-            } only %}
-        </div>
-    {% endif %}
+    <div class="moderation">
+        {% include 'Comment/SignalComment.html.twig' with {
+            commentId: IdComment
+        } only %}
+        {% if is_granted('ROLE_ADMIN') %}
+                {% include 'Comment/RemoveComment.html.twig' with {
+                    commentId: IdComment
+                } only %}
+        {% endif %}
+    </div>
     
     
 </div>

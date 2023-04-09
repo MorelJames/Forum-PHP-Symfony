@@ -10,24 +10,31 @@
     <body>
         {% block header %}
             <div class = "menuHeader">
-                {% if name is defined %}
-                    <a href="{{ path('adminComment', {'name': name}) }}">Home</a>
-                {% else %}
-                    <a href="{{ path('adminComment', {'name': 'pour quand il y a pas de nom'}) }}">Home</a>
-                {% endif %}
                 <a href="{{ path('app_allCategory') }}",
-                    class="{% if (app.request.pathInfo == path('app_allCategory')) %} active{% endif %}"
+                    class="{% if (app.request.pathInfo == path('app_allCategory')
+                    or '/Category/' in app.request.pathInfo) %} active{% endif %}"
                     ><p>Category</p></a>
 
                 <a href="{{ path('app_allPostAdmin') }}",
                     class="{% if (app.request.pathInfo == path('app_allPostAdmin')) %} active{% endif %}"
                     ><p>All posts</p></a>
-                <a href="{{ path('adminCategory', {'category': 'Bugs'}) }}">My posts</a>
+                <a href="{{ path('app_userdashboard') }}",
+                    class="{% if (app.request.pathInfo == path('app_userdashboard')) %} active{% endif %}">
+                <p>My dashboard</p></a>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_admindashboard') }}",
+                        class="{% if (app.request.pathInfo == path('app_admindashboard')
+                        or app.request.pathInfo == path('app_adminMangeUserRole')
+                        or app.request.pathInfo == path('app_signaledPosts')
+                        or app.request.pathInfo == path('app_signaledComments')) %} active{% endif %}">
+                    <p>Admin dashboard</p></a>
+                {% endif %}
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path('app_logout') }}">Log out</a>
                 {% else %}
-                    <a href="#">Log in</a>
+                    <a href="{{ path('app_login') }}">Log in</a>
                 {% endif %}
                 
             </div>

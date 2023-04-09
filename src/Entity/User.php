@@ -88,6 +88,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function removeRole(string $role):self
+    {
+        $this->roles = array_diff($this->roles, [$role]);
+
+        return $this;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

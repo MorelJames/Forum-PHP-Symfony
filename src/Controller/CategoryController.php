@@ -58,10 +58,10 @@ class CategoryController extends AbstractController
             $entity->persist($category);
             $entity->flush();
 
-            return $this->redirectToRoute('app_allPostAdmin');
+            return $this->redirectToRoute('app_allCategory');
         }
 
-        return $this->render('/AdminPost.html.twig', [
+        return $this->render('/Category/CreateCategory.html.twig', [
             'form' => $form->createView()
         ]);
     }

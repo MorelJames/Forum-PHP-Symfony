@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\User;
+use App\Entity\Comment;
+use Monolog\DateTimeImmutable;
 
 class AdminCommentController extends AbstractController{
     
@@ -30,11 +33,14 @@ class AdminCommentController extends AbstractController{
             return $this->render('requireValidation.html.twig');
         }
         
-        $comment = $doctrine->getRepository(Post::class)->find($commentId);
+        $comment = $doctrine->getRepository(Comment::class)->find($commentId);
+        $postId = $comment->getPost()->getId();
         $comment->setSignaled(true);
+        $comment->setReportedAt(new DateTimeImmutable(false));
         $entity = $doctrine->getManager();
         $entity->flush();
 
-        return $this->redirectToRoute('/commentAdmin/'.$commentId);
+        return $this->redirectToRoute('post',[
+            'postId' => $postId]);
     }
 }

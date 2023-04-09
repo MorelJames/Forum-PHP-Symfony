@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\PostType;
 use Monolog\DateTimeImmutable;
@@ -78,9 +79,11 @@ class AdminPostController extends AbstractController
         
         $post = $doctrine->getRepository(Post::class)->find($postId);
         $post->setSignaled(true);
+        $post->setReportedAt(new DateTimeImmutable(false));
         $entity = $doctrine->getManager();
         $entity->flush();
 
-        return $this->redirectToRoute('/postController/'.$postId);
+        return $this->redirectToRoute('post',[
+            'postId' => $postId]);
     }
 }

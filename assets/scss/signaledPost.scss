@@ -1,0 +1,37 @@
+.signaledPost{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1%;
+    border-bottom: 1px white solid;
+    width: 60%;
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+    .content{
+        max-width: 50%;
+    }
+
+    .title{
+        font-size: x-large;
+    }
+
+    .username{
+        color: lightgray;
+        font-size: small;
+    }
+
+    .decision{
+        align-items: center;
+        margin-right: 5%;
+
+        a{
+            :hover{
+                color: darkorange;
+            }
+        }
+    }
+}

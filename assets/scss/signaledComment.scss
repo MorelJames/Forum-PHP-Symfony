@@ -1,0 +1,45 @@
+.signaledComment{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1%;
+    border-bottom: 1px white solid;
+    width: 60%;
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .commentInfo{
+        max-width: 50%;
+        .commentContent{
+            font-size: x-large;
+        }
+    }
+
+    .username, .reportingDate{
+        color: lightgray;
+        font-size: small;
+    }
+    .relatedPost{
+        color: lightgray;
+        font-size: small;
+        text-decoration: underline;
+        :hover{
+            color: darkorange;
+            text-decoration-color: darkorange;
+        }
+    }
+    .decision{
+        align-items: center;
+        margin-right: 5%;
+
+        a{
+            :hover{
+                color: darkorange;
+            }
+        }
+    }
+}

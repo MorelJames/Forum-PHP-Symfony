@@ -1,34 +1,10 @@
-form[name=comment]{
-    width: 100%;
+form[name=login_form]{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    margin-top: 5%;
 
-    h2{
-        display: none;
-    }
-}
-
-
-
-#comment{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    width: 100%;
-
-    :first-child{
-        width: 80%;
-
-        :first-child{
-            width: 100%;
-        }
-    }
-    :nth-child(2){
-        width: 20%;
-        :first-child{
-            width: 100%;
-        }
+    *{
+        margin: 2%;
     }
 
     input{
@@ -39,7 +15,7 @@ form[name=comment]{
         color: white;
     }
 
-    input[type=text]:hover{
+    input[type=password]:hover , input[type=text]:hover{
         border-bottom:1px darkorange solid;
         background-color: rgba(255, 255, 255, 0.329);
     }
@@ -53,5 +29,16 @@ form[name=comment]{
     button:hover{
         border:1px darkorange solid;
         background-color: rgba(255, 255, 255, 0.329);
+    }
+}
+
+.registerLink{
+    color: lightgray;
+    font-size: small;
+    text-decoration: underline;
+
+    :hover{
+        color: darkorange;
+        text-decoration-color: darkorange;
     }
 }

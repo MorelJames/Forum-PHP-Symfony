@@ -22,6 +22,9 @@ class Comment
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?\DateTimeImmutable $reportedAt = null;
+
     #[ORM\Column(type: 'boolean')]
     private $isSignaled = false;
 
@@ -74,6 +77,18 @@ class Comment
         return $this;
     }
 
+    public function getReportedAt(): ?\DateTimeImmutable
+    {
+        return $this->reportedAt;
+    }
+
+    public function setReportedAt(?\DateTimeImmutable $reportedAt): self
+    {
+        $this->reportedAt = $reportedAt;
+
+        return $this;
+    }
+
     public function getPost(): ?Post
     {
         return $this->post;
@@ -94,6 +109,18 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSignaled() : bool
+    {
+        return $this->isSignaled;
+    }
+
+    public function setSignaled(bool $signal) : self
+    {
+        $this->isSignaled = $signal;
 
         return $this;
     }

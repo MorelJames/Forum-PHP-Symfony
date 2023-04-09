@@ -19,13 +19,24 @@ class DashboardFormType extends AbstractType
     {
         //TODO : photo de profil
         $builder
-            ->add('email')
-            ->add('username', TextType::class)
+            ->add('email', TextType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Enter your email address'
+                )
+            ))
+            ->add('username', TextType::class, array(
+                'label' => false,
+                'attr' => array(
+                    'placeholder' => 'Enter your username'
+                )
+            ))
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'label' => false,
+                'attr' => ['autocomplete' => 'new-password', 'placeholder' => "Enter your new password"],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

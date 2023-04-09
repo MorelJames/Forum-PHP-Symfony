@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\PostType;
 use App\Form\CommentType;
 use Monolog\DateTimeImmutable;

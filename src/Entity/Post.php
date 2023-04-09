@@ -30,6 +30,9 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?\DateTimeImmutable $reportedAt = null;
+
     #[ORM\Column(type: 'boolean')]
     private $isSignaled = false;
 
@@ -113,6 +116,18 @@ class Post
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getReportedAt(): ?\DateTimeImmutable
+    {
+        return $this->reportedAt;
+    }
+
+    public function setReportedAt(?\DateTimeImmutable $reportedAt): self
+    {
+        $this->reportedAt = $reportedAt;
 
         return $this;
     }

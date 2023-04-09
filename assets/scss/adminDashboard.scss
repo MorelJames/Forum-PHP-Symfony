@@ -1,0 +1,16 @@
+.dashActions{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-between;
+
+    .dashButton{
+        background-color: darkorange;
+        font-size: x-large;
+        padding: 2%;
+
+        :hover{
+            color: white;
+        }
+    }
+}

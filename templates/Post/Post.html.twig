@@ -3,7 +3,19 @@
 {% block body%}
    
    <div class="postContent">
-      <h1>{{post.getTitle()}}</h1>
+      <div class="titleDiv">
+         <h1>{{post.getTitle()}}</h1>
+         <div class="moderation">
+            {% include 'Post/SignalPost.html.twig' with {
+                  postId: post.Id
+            } only %}
+            {% if is_granted('ROLE_ADMIN') %}
+                     {% include 'Post/RemovePost.html.twig' with {
+                        postId: post.Id
+                     } only %}
+            {% endif %}
+         </div>
+      </div>
       <p>{{post.getContent()}}</p>
    </div>
 

@@ -1,0 +1,21 @@
+{% extends "base.html.twig"%}
+
+{% block body%}
+    <h1>Signaled Posts</h1>
+    {% for post in allPosts %}
+        {% if post.getSignaled() %}
+            <div class= "signaledPost">
+                <div class="content">
+                    <p class="title">{{post.getTitle}}</p>
+                    <p>{{post.getContent()}}</p>
+                    <p class="username">by: {{post.user.username}}</p>
+                </div>
+                <div class="decision">
+                    <a href="{{ path('app_validate_post', {'postId' : post.getId()}) }}"><p>Valid</p></a>
+                    <a href="{{ path('app_admin_rmpost', {'postId' : post.getId()}) }}"><p>Delete</p></a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %} 
+
+{% endblock %}
